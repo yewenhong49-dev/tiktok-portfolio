@@ -53,19 +53,20 @@ export default function PortfolioHeader({ activeCategory, onCategoryChange }: Po
         href="/resume.pdf"
         target="_blank"
         rel="noopener noreferrer"
-        className="absolute top-3 right-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full
+        className="absolute top-2 right-0 sm:top-3 inline-flex items-center gap-1 sm:gap-1.5
+          px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full
           bg-white/[0.03] backdrop-blur-sm
           border border-purple-500/20
-          text-sm font-medium text-gray-300
+          text-xs sm:text-sm font-medium text-gray-300
           shadow-[0_0_18px_rgba(168,85,247,0.1)]
           hover:bg-white/[0.07] hover:border-purple-400/40
           hover:text-white hover:shadow-[0_0_28px_rgba(168,85,247,0.22)]
           hover:scale-[1.03]
-          transition-all duration-300 cursor-pointer
-          sm:inline-flex hidden"
+          transition-all duration-300 cursor-pointer"
       >
-        <span className="text-base">📄</span>
-        <span>查看个人简历</span>
+        <span className="text-sm sm:text-base">📄</span>
+        <span className="hidden sm:inline">查看个人简历</span>
+        <span className="sm:hidden">简历</span>
       </a>
 
       <div className="flex flex-col items-center gap-3">

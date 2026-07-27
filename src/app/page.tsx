@@ -27,7 +27,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col w-full max-w-[1280px] mx-auto px-8">
+    <div className="min-h-screen flex flex-col w-full max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8">
       {/* Header：标题 + 标签 + 联系方式 + 分类Tab */}
       <PortfolioHeader
         activeCategory={activeCategory}
