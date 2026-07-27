@@ -7,7 +7,7 @@ export interface VideoItem {
   videoUrl: string;
 }
 
-const BASE = 'http://titkiwqkm.hn-bkt.clouddn.com/作品集上传';
+const BASE = 'https://media.xiajianhong.xyz';
 
 /**
  * 编码 OSS 路径中的特殊字符

@@ -10,7 +10,8 @@
       "Bash(git branch *)",
       "Bash(git push *)",
       "Bash(git commit -m 'fix: 移动端适配优化 *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(curl -sI --max-time 10 \"http://titkiwqkm.hn-bkt.clouddn.com/作品集上传/实拍视频/信封1.mp4\")"
     ]
   }
 }
