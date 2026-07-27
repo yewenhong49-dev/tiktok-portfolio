@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh auth *)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'feat: 初始提交 — 夏建洪TikTok个人作品集 *)",
+      "Bash(git config *)"
+    ]
+  }
+}
