@@ -7,393 +7,79 @@ export interface VideoItem {
   videoUrl: string;
 }
 
-const BASE = 'https://media.xiajianhong.xyz';
+const BASE = '/portfolio';
 
-/**
- * 编码 OSS 路径中的特殊字符
- * encodeURIComponent 不会编码 + 在某些 OSS 场景下可能出问题，
- * 这里显式将空格 → %20、+ → %2B，其余中文交给 encodeURIComponent
- */
-const enc = (s: string) =>
-  encodeURIComponent(s)
-    .replace(/\+/g, '%2B')
-    .replace(/%20/g, '%20'); // encodeURIComponent 已处理，保留确保一致性
+const videoUrl = (dir: string, file: string) => `${BASE}/${dir}/${file}`;
 
-/** 视频直链 */
-const videoUrl = (dir: string, file: string) =>
-  `${BASE}/${enc(dir)}/${enc(file)}`;
+/* ==================== 实拍视频 (16) ==================== */
+const realVideos: VideoItem[] = [
+  { file: 'anker_screen_charger.mp4',       title: '安克屏显充电器',   tag: '3C数码' },
+  { file: 'anker_screen_charger_2.mp4',     title: '安克屏显充电器-2', tag: '3C数码' },
+  { file: '3in1_usb_drive.mp4',             title: '三合一U盘',        tag: '3C数码' },
+  { file: 'multi_charging_cable.mp4',       title: '多功能充电线',     tag: '3C数码' },
+  { file: 'colorful_power_bank.mp4',        title: '彩色充电宝',       tag: '3C数码' },
+  { file: '7color_watch.mp4',               title: '七色表带手表',     tag: '3C数码' },
+  { file: 'dashcam.mp4',                    title: '行车记录仪',       tag: '汽配数码' },
+  { file: 'lawn_sweeper.mp4',               title: '草坪清扫机',       tag: '五金工具' },
+  { file: 'magnetic_drill.mp4',             title: '磁力钻',           tag: '五金工具' },
+  { file: 'relay_tester.mp4',               title: '继电器检测器',     tag: '五金工具' },
+  { file: 'mini_chainsaw.mp4',              title: '迷你油锯',         tag: '五金工具' },
+  { file: 'car_jack.mp4',                   title: '汽车千斤顶',       tag: '五金工具' },
+  { file: 'post_hole_digger.mp4',           title: '立柱式挖坑机',     tag: '五金工具' },
+  { file: 'demolition_hammer.mp4',          title: '拆除电镐',         tag: '五金工具' },
+  { file: 'valentine_envelope.mp4',         title: '情人节信封',       tag: '居家生活' },
+  { file: 'redbull_glowing_cup.mp4',        title: '红牛发光杯',       tag: '居家生活' },
+].map(({ file, title, tag }, i) => ({
+  id: `real-${i + 1}`,
+  title,
+  category: 'real' as const,
+  tag,
+  coverUrl: '',
+  videoUrl: videoUrl('shipai', file),
+}));
 
-/** 封面直链 — OSS 视频截帧 (t_0.1 避免黑屏首帧) */
-const coverUrl = (dir: string, file: string) =>
-  `${BASE}/${enc(dir)}/${enc(file)}?x-oss-process=video/snapshot,t_100,f_jpg`;
+/* ==================== AI + 实拍 (5) ==================== */
+const aiRealVideos: VideoItem[] = [
+  { file: '6in1_trimmer.mp4',          title: '六合一修剪工具',   tag: 'AI+实拍' },
+  { file: 'floor_jack.mp4',            title: '地板千斤顶',       tag: 'AI+实拍' },
+  { file: 'pool_sand_filter.mp4',      title: '泳池砂滤泵',       tag: 'AI+实拍' },
+  { file: 'pool_sand_filter_2.mp4',    title: '泳池砂滤泵-脚本2',  tag: 'AI+实拍' },
+  { file: 'weed_barrier.mp4',          title: '防草布',           tag: 'AI+实拍' },
+].map(({ file, title, tag }, i) => ({
+  id: `ai-real-${i + 1}`,
+  title,
+  category: 'ai-real' as const,
+  tag,
+  coverUrl: '',
+  videoUrl: videoUrl('ai_shipai', file),
+}));
 
-export const videos: VideoItem[] = [
-  // ==================== 🎬 实拍视频 (26 条) ====================
-  // ===== 🔥 精选爆款 TOP 10 =====
-  {
-    id: 'real-01',
-    title: '安克屏显充电器',
-    category: 'real',
-    tag: '3C数码',
-    coverUrl: coverUrl('实拍视频', '安克新品-渠道号-有音乐.mp4'),
-    videoUrl: videoUrl('实拍视频', '安克新品-渠道号-有音乐.mp4'),
-  },
-  {
-    id: 'real-02',
-    title: '草坪清扫机-脚本1',
-    category: 'real',
-    tag: '五金工具',
-    coverUrl: coverUrl('实拍视频', '草坪清扫机1-BK-E1E2B3.mp4'),
-    videoUrl: videoUrl('实拍视频', '草坪清扫机1-BK-E1E2B3.mp4'),
-  },
-  {
-    id: 'real-03',
-    title: '磁力钻-脚本1',
-    category: 'real',
-    tag: '五金工具',
-    coverUrl: coverUrl('实拍视频', '磁力钻2-BK-B1B2Z3.mp4'),
-    videoUrl: videoUrl('实拍视频', '磁力钻2-BK-B1B2Z3.mp4'),
-  },
-  {
-    id: 'real-04',
-    title: '继电器检测器',
-    category: 'real',
-    tag: '五金工具',
-    coverUrl: coverUrl('实拍视频', '继电器检测器3.mp4'),
-    videoUrl: videoUrl('实拍视频', '继电器检测器3.mp4'),
-  },
-  {
-    id: 'real-05',
-    title: '迷你油锯-脚本1',
-    category: 'real',
-    tag: '五金工具',
-    coverUrl: coverUrl('实拍视频', '油锯1.mp4'),
-    videoUrl: videoUrl('实拍视频', '油锯1.mp4'),
-  },
-  {
-    id: 'real-06',
-    title: '汽车千斤顶',
-    category: 'real',
-    tag: '五金工具',
-    coverUrl: coverUrl('实拍视频', '千斤顶2.mp4'),
-    videoUrl: videoUrl('实拍视频', '千斤顶2.mp4'),
-  },
-  {
-    id: 'real-07',
-    title: '挖坑机-脚本1',
-    category: 'real',
-    tag: '五金工具',
-    coverUrl: coverUrl('实拍视频', '挖坑机2-BK-D1E2B3.mp4'),
-    videoUrl: videoUrl('实拍视频', '挖坑机2-BK-D1E2B3.mp4'),
-  },
-  {
-    id: 'real-08',
-    title: '情人节信封',
-    category: 'real',
-    tag: '居家生活',
-    coverUrl: coverUrl('实拍视频', '信封1.mp4'),
-    videoUrl: videoUrl('实拍视频', '信封1.mp4'),
-  },
-  {
-    id: 'real-09',
-    title: '一次性马桶刷',
-    category: 'real',
-    tag: '居家生活',
-    coverUrl: coverUrl('实拍视频', '马桶刷3.mp4'),
-    videoUrl: videoUrl('实拍视频', '马桶刷3.mp4'),
-  },
-  {
-    id: 'real-10',
-    title: '六合一修剪工具',
-    category: 'real',
-    tag: '五金工具',
-    coverUrl: coverUrl('实拍视频', '六合一3-BK-E1D2B3.mp4'),
-    videoUrl: videoUrl('实拍视频', '六合一3-BK-E1D2B3.mp4'),
-  },
-  // ===== 其余实拍作品 =====
-  {
-    id: 'real-11',
-    title: '行车记录仪',
-    category: 'real',
-    tag: '汽配数码',
-    coverUrl: coverUrl('实拍视频', 'POP-行车记录仪1.mp4'),
-    videoUrl: videoUrl('实拍视频', 'POP-行车记录仪1.mp4'),
-  },
-  {
-    id: 'real-12',
-    title: '三合一U盘',
-    category: 'real',
-    tag: '3C数码',
-    coverUrl: coverUrl('实拍视频', 'U盘2.mp4'),
-    videoUrl: videoUrl('实拍视频', 'U盘2.mp4'),
-  },
-  {
-    id: 'real-13',
-    title: '安克充电器-脚本2',
-    category: 'real',
-    tag: '3C数码',
-    coverUrl: coverUrl('实拍视频', '安克新品7.mp4'),
-    videoUrl: videoUrl('实拍视频', '安克新品7.mp4'),
-  },
-  {
-    id: 'real-14',
-    title: '红牛发光杯',
-    category: 'real',
-    tag: '居家生活',
-    coverUrl: coverUrl('实拍视频', '杯子2.mp4'),
-    videoUrl: videoUrl('实拍视频', '杯子2.mp4'),
-  },
-  {
-    id: 'real-15',
-    title: '剥线器-脚本1-西语',
-    category: 'real',
-    tag: '五金工具',
-    coverUrl: coverUrl('实拍视频', '剥线器1-BK-C1F2G3.mp4'),
-    videoUrl: videoUrl('实拍视频', '剥线器1-BK-C1F2G3.mp4'),
-  },
-  {
-    id: 'real-16',
-    title: '剥线器-脚本2-英语',
-    category: 'real',
-    tag: '五金工具',
-    coverUrl: coverUrl('实拍视频', '剥线器2-BK-H1C2Z3.mp4'),
-    videoUrl: videoUrl('实拍视频', '剥线器2-BK-H1C2Z3.mp4'),
-  },
-  {
-    id: 'real-17',
-    title: '草坪清扫机-脚本2',
-    category: 'real',
-    tag: '五金工具',
-    coverUrl: coverUrl('实拍视频', '草坪清扫机1.mp4'),
-    videoUrl: videoUrl('实拍视频', '草坪清扫机1.mp4'),
-  },
-  {
-    id: 'real-18',
-    title: '七彩充电宝',
-    category: 'real',
-    tag: '3C数码',
-    coverUrl: coverUrl('实拍视频', '充电宝1.mp4'),
-    videoUrl: videoUrl('实拍视频', '充电宝1.mp4'),
-  },
-  {
-    id: 'real-19',
-    title: '多功能快充数据线',
-    category: 'real',
-    tag: '3C数码',
-    coverUrl: coverUrl('实拍视频', '充电线4.mp4'),
-    videoUrl: videoUrl('实拍视频', '充电线4.mp4'),
-  },
-  {
-    id: 'real-20',
-    title: '磁力钻-脚本2',
-    category: 'real',
-    tag: '五金工具',
-    coverUrl: coverUrl('实拍视频', '磁力钻1-BK-B1C2Z3.mp4'),
-    videoUrl: videoUrl('实拍视频', '磁力钻1-BK-B1C2Z3.mp4'),
-  },
-  {
-    id: 'real-21',
-    title: '电镐-脚本1',
-    category: 'real',
-    tag: '五金工具',
-    coverUrl: coverUrl('实拍视频', '电镐1-BK-A1D2A3.mp4'),
-    videoUrl: videoUrl('实拍视频', '电镐1-BK-A1D2A3.mp4'),
-  },
-  {
-    id: 'real-22',
-    title: '一次性马桶刷-脚本2',
-    category: 'real',
-    tag: '居家生活',
-    coverUrl: coverUrl('实拍视频', '马桶刷4.mp4'),
-    videoUrl: videoUrl('实拍视频', '马桶刷4.mp4'),
-  },
-  {
-    id: 'real-23',
-    title: '便携式尿壶',
-    category: 'real',
-    tag: '居家生活',
-    coverUrl: coverUrl('实拍视频', '尿壶2.mp4'),
-    videoUrl: videoUrl('实拍视频', '尿壶2.mp4'),
-  },
-  {
-    id: 'real-24',
-    title: '七色表带手表',
-    category: 'real',
-    tag: '3C数码',
-    coverUrl: coverUrl('实拍视频', '七色手表2.mp4'),
-    videoUrl: videoUrl('实拍视频', '七色手表2.mp4'),
-  },
-  {
-    id: 'real-25',
-    title: '挖坑机-脚本2',
-    category: 'real',
-    tag: '五金工具',
-    coverUrl: coverUrl('实拍视频', '挖坑机1-BK-D1E2B3.mp4'),
-    videoUrl: videoUrl('实拍视频', '挖坑机1-BK-D1E2B3.mp4'),
-  },
-  {
-    id: 'real-26',
-    title: '迷你油锯-脚本2',
-    category: 'real',
-    tag: '五金工具',
-    coverUrl: coverUrl('实拍视频', '油锯3.mp4'),
-    videoUrl: videoUrl('实拍视频', '油锯3.mp4'),
-  },
+/* ==================== 纯 AI 生成 (7) ==================== */
+const pureAiVideos: VideoItem[] = [
+  { file: '450pcs_tool_set.mp4',       title: '450件工具套装',    tag: 'Veo' },
+  { file: '6in1_trimmer_ai.mp4',       title: '六合一修剪工具',   tag: 'Veo' },
+  { file: 'wall_fan.mp4',              title: '挂壁式风扇',       tag: 'Seedance' },
+  { file: 'pool_sand_filter_ai.mp4',   title: '泳池砂滤泵',       tag: 'Veo' },
+  { file: 'post_hole_digger_ai.mp4',   title: '立柱式挖坑机',     tag: 'Seedance' },
+  { file: 'high_pressure_sprayer.mp4', title: '高压喷涂机',       tag: 'Seedance' },
+  { file: 'high_pressure_washer.mp4',  title: '高压水枪',         tag: 'Veo' },
+].map(({ file, title, tag }, i) => ({
+  id: `pure-ai-${i + 1}`,
+  title,
+  category: 'pure-ai' as const,
+  tag,
+  coverUrl: '',
+  videoUrl: videoUrl('ai_video', file),
+}));
 
-  // ==================== 🪄 AI + 实拍视频 (5 条) ====================
-  // OSS 文件夹名: AI＋实拍（全角加号 U+FF0B，无空格）
-  {
-    id: 'ai-real-01',
-    title: '地板千斤顶',
-    category: 'ai-real',
-    tag: 'AI+实拍',
-    coverUrl: coverUrl('AI＋实拍', '地板千斤顶1.mp4'),
-    videoUrl: videoUrl('AI＋实拍', '地板千斤顶1.mp4'),
-  },
-  {
-    id: 'ai-real-02',
-    title: '防草布',
-    category: 'ai-real',
-    tag: 'AI+实拍',
-    coverUrl: coverUrl('AI＋实拍', '防草布2.mp4'),
-    videoUrl: videoUrl('AI＋实拍', '防草布2.mp4'),
-  },
-  {
-    id: 'ai-real-03',
-    title: '六合一',
-    category: 'ai-real',
-    tag: 'AI+实拍',
-    coverUrl: coverUrl('AI＋实拍', '六合一1.mp4'),
-    videoUrl: videoUrl('AI＋实拍', '六合一1.mp4'),
-  },
-  {
-    id: 'ai-real-04',
-    title: '砂滤泵 ②',
-    category: 'ai-real',
-    tag: 'AI+实拍',
-    coverUrl: coverUrl('AI＋实拍', '砂滤泵2.mp4'),
-    videoUrl: videoUrl('AI＋实拍', '砂滤泵2.mp4'),
-  },
-  {
-    id: 'ai-real-05',
-    title: '砂滤泵 ④',
-    category: 'ai-real',
-    tag: 'AI+实拍',
-    coverUrl: coverUrl('AI＋实拍', '砂滤泵4.mp4'),
-    videoUrl: videoUrl('AI＋实拍', '砂滤泵4.mp4'),
-  },
+export const videos: VideoItem[] = [...realVideos, ...aiRealVideos, ...pureAiVideos];
 
-  // ==================== 🤖 纯 AI 生成视频 (11 条) ====================
-  {
-    id: 'pure-ai-01',
-    title: '450 工具套装',
-    category: 'pure-ai',
-    tag: 'Veo',
-    coverUrl: coverUrl('AI视频', '450工具套装1.mp4'),
-    videoUrl: videoUrl('AI视频', '450工具套装1.mp4'),
-  },
-  {
-    id: 'pure-ai-02',
-    title: '高压水枪',
-    category: 'pure-ai',
-    tag: 'Veo',
-    coverUrl: coverUrl('AI视频', '高压水枪1.mp4'),
-    videoUrl: videoUrl('AI视频', '高压水枪1.mp4'),
-  },
-  {
-    id: 'pure-ai-03',
-    title: '挂壁风扇 ②',
-    category: 'pure-ai',
-    tag: 'Seedance',
-    coverUrl: coverUrl('AI视频', '挂壁风扇2.mp4'),
-    videoUrl: videoUrl('AI视频', '挂壁风扇2.mp4'),
-  },
-  {
-    id: 'pure-ai-04',
-    title: '挂壁风扇 ⑤',
-    category: 'pure-ai',
-    tag: 'Seedance',
-    coverUrl: coverUrl('AI视频', '挂壁风扇5.mp4'),
-    videoUrl: videoUrl('AI视频', '挂壁风扇5.mp4'),
-  },
-  {
-    id: 'pure-ai-05',
-    title: '六合一 ③',
-    category: 'pure-ai',
-    tag: 'Veo',
-    coverUrl: coverUrl('AI视频', '六合一3.mp4'),
-    videoUrl: videoUrl('AI视频', '六合一3.mp4'),
-  },
-  {
-    id: 'pure-ai-06',
-    title: '六合一 ⑥',
-    category: 'pure-ai',
-    tag: 'Veo',
-    coverUrl: coverUrl('AI视频', '六合一6.mp4'),
-    videoUrl: videoUrl('AI视频', '六合一6.mp4'),
-  },
-  {
-    id: 'pure-ai-07',
-    title: '喷涂机 ①',
-    category: 'pure-ai',
-    tag: 'Seedance',
-    coverUrl: coverUrl('AI视频', '喷涂机1.mp4'),
-    videoUrl: videoUrl('AI视频', '喷涂机1.mp4'),
-  },
-  {
-    id: 'pure-ai-08',
-    title: '喷涂机 ②',
-    category: 'pure-ai',
-    tag: 'Seedance',
-    coverUrl: coverUrl('AI视频', '喷涂机2.mp4'),
-    videoUrl: videoUrl('AI视频', '喷涂机2.mp4'),
-  },
-  {
-    id: 'pure-ai-09',
-    title: '砂滤泵 ③',
-    category: 'pure-ai',
-    tag: 'Veo',
-    coverUrl: coverUrl('AI视频', '砂滤泵3.mp4'),
-    videoUrl: videoUrl('AI视频', '砂滤泵3.mp4'),
-  },
-  {
-    id: 'pure-ai-10',
-    title: '挖坑机 ①',
-    category: 'pure-ai',
-    tag: 'Seedance',
-    coverUrl: coverUrl('AI视频', '挖坑机1.mp4'),
-    videoUrl: videoUrl('AI视频', '挖坑机1.mp4'),
-  },
-  {
-    id: 'pure-ai-11',
-    title: '挖坑机 ④',
-    category: 'pure-ai',
-    tag: 'Seedance',
-    coverUrl: coverUrl('AI视频', '挖坑机4.mp4'),
-    videoUrl: videoUrl('AI视频', '挖坑机4.mp4'),
-  },
-];
-
-/** 分类配置 */
 export const categories = [
-  {
-    key: 'real' as const,
-    label: '实拍视频',
-    subtitle: '3C数码 / 五金工具 / 居家生活',
-  },
-  {
-    key: 'ai-real' as const,
-    label: 'AI + 实拍视频',
-    subtitle: '实拍素材 + AIGC 降本增效',
-  },
-  {
-    key: 'pure-ai' as const,
-    label: '纯 AI 生成视频',
-    subtitle: 'Veo / Seedance 2.0 全流程生成',
-  },
+  { key: 'real' as const,     label: '实拍视频',       subtitle: '3C数码 / 五金工具 / 居家生活' },
+  { key: 'ai-real' as const,  label: 'AI + 实拍视频',  subtitle: '实拍素材 + AIGC 降本增效' },
+  { key: 'pure-ai' as const,  label: '纯 AI 生成视频', subtitle: 'Veo / Seedance 2.0 全流程生成' },
 ];
 
-/** 联系人信息 */
 export const contact = {
   name: '夏建洪',
   title: '美区 TikTok 拍剪 & AIGC 视频创作者',

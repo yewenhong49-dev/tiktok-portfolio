@@ -88,13 +88,17 @@ export default function VideoFeed({ videos, onOpenLightbox }: VideoFeedProps) {
               data-index={index}
               className="relative w-full h-full snap-start snap-always flex items-center justify-center bg-black"
             >
-              <img
-                src={video.coverUrl}
-                alt={video.title}
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-                suppressHydrationWarning
-              />
+              {video.coverUrl ? (
+                <img
+                  src={video.coverUrl}
+                  alt={video.title}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  loading="lazy"
+                  suppressHydrationWarning
+                />
+              ) : (
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black" />
+              )}
               <div className="absolute bottom-0 inset-x-0 z-10 p-4 pb-8 bg-gradient-to-t from-black/90 via-black/50 to-transparent">
                 <div className="flex items-start gap-3">
                   <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-red-500 flex items-center justify-center">
